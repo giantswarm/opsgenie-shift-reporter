@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 
@@ -86,14 +87,16 @@ func printSummary(client *slack.Client, shifts map[string]int) error {
 	}
 	sort.Strings(names)
 
-	attachments := []slack.Attachment{}
+	attachment := slack.Attachment{}
 	for _, name := range names {
 		if name == "" {
 			continue
 		}
 
-		attachments = append(attachments, slack.Attachment{
-			Text: fmt.Sprintf("%v: %v shifts", name, shifts[name]),
+		attachment.Fields = append(attachment.Fields, slack.AttachmentField{
+			Title: name,
+			Value: strconv.Itoa(shifts[name]),
+			Short: true,
 		})
 	}
 
@@ -104,7 +107,7 @@ func printSummary(client *slack.Client, shifts map[string]int) error {
 			fmt.Sprintf("Oncall shifts counts (%v of %v to %v of %v)", START_DATE, time.Now().Month()-1, START_DATE-1, time.Now().Month()),
 			false,
 		),
-		slack.MsgOptionAttachments(attachments...),
+		slack.MsgOptionAttachments(attachment),
 	); err != nil {
 		return err
 	}
