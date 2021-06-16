@@ -1,0 +1,30 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: opsgenie-shift-reporter
+  namespace: opsgenie-shift-reporter
+spec:
+  schedule: "0 6 20 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: opsgenie-shift-reporter
+            image: quay.io/giantswarm/opsgenie-shift-reporter:latest
+            imagePullPolicy: Always
+            args:
+            - -opsgenie-key=$(opsgenie-key)
+            - -slack-key=$(slack-key)
+            env:
+            - name: opsgenie-key
+              valueFrom:
+                secretKeyRef:
+                  name: opsgenie-shift-reporter
+                  key: opsgenie-key
+            - name: slack-key
+              valueFrom:
+                secretKeyRef:
+                  name: opsgenie-shift-reporter
+                  key: slack-key
+          restartPolicy: Never
