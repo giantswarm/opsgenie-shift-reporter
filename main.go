@@ -100,11 +100,13 @@ func printSummary(client *slack.Client, shifts map[string]int) error {
 		})
 	}
 
+	oneMonth, _ := time.ParseDuration("24h")
+	oneMonth = oneMonth * 31
 	if _, _, err := client.PostMessage(
 		"#noise-shift-count",
 		slack.MsgOptionAsUser(true),
 		slack.MsgOptionText(
-			fmt.Sprintf("Area oncall shift counts (%v of %v to %v of %v)", START_DATE, time.Now().Month()-1, START_DATE-1, time.Now().Month()),
+			fmt.Sprintf("Area oncall shift counts (%v of %v to %v of %v)", START_DATE, time.Now().Add((-oneMonth)), START_DATE-1, time.Now().Month()),
 			false,
 		),
 		slack.MsgOptionAttachments(attachment),
