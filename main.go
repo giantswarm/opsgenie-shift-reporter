@@ -66,7 +66,7 @@ func getOncaller(client *schedule.Client, scheduleName string, date time.Time) (
 		return "", err
 	}
 
-	if len(schedule.FinalTimeline.Rotations) != 1 || len(schedule.FinalTimeline.Rotations[0].Periods) == 0 {
+	if len(schedule.FinalTimeline.Rotations) < 1 || len(schedule.FinalTimeline.Rotations[0].Periods) == 0 {
 		return "", nil
 	}
 
