@@ -27,4 +27,16 @@ spec:
                 secretKeyRef:
                   name: opsgenie-shift-reporter
                   key: slack-key
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              runAsUser: 1000
+              runAsNonRoot: true
+              runAsGroup: 3000
+              privileged: false
+              readOnlyRootFilesystem: true
+              seccompProfile:
+                type: RuntimeDefault
           restartPolicy: Never
