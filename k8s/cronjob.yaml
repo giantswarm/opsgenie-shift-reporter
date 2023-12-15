@@ -1,4 +1,4 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: opsgenie-shift-reporter
@@ -9,6 +9,8 @@ spec:
     spec:
       template:
         spec:
+          securityContext:
+            runAsNonRoot: true
           containers:
           - name: opsgenie-shift-reporter
             image: quay.io/giantswarm/opsgenie-shift-reporter:latest
@@ -16,6 +18,14 @@ spec:
             args:
             - -opsgenie-key=$(opsgenie-key)
             - -slack-key=$(slack-key)
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              privileged: false
+              seccompProfile:
+                type: RuntimeDefault
             env:
             - name: opsgenie-key
               valueFrom:
