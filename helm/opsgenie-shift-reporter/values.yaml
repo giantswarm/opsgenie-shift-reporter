@@ -1,6 +1,6 @@
 
 image:
-  registry: gsociprivate.azurecr.io
+  registry: gsoci.azurecr.io
   name: giantswarm/opsgenie-shift-reporter
 
 slack:
