@@ -3,6 +3,6 @@ description: A Helm chart for opsgenie-shift-reporter
 home: https://github.com/giantswarm/opsgenie-shift-reporter
 icon: https://s.giantswarm.io/app-icons/prometheus/1/light.svg
 name: opsgenie-shift-reporter
-version: 0.1.0
+version: 0.1.1
 annotations:
   application.giantswarm.io/team: "horizon"
