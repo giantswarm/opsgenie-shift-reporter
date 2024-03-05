@@ -71,10 +71,7 @@ func getOncaller(client *schedule.Client, scheduleName string, date time.Time) (
 	}
 
 	name := schedule.FinalTimeline.Rotations[0].Periods[0].Recipient.Name
-
-	if strings.HasSuffix(name, "@giantswarm.io") {
-		name = strings.TrimSuffix(name, "@giantswarm.io")
-	}
+	name = strings.TrimSuffix(name, "@giantswarm.io")
 
 	return name, nil
 }
