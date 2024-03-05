@@ -15,6 +15,17 @@
                 }
             }
         },
+        "image": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "registry": {
+                    "type": "string"
+                }
+            }
+        },
         "opsgenie": {
             "type": "object",
             "properties": {

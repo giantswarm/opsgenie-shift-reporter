@@ -18,14 +18,14 @@ spec:
             - name: opsgenie-key
               valueFrom:
                 secretKeyRef:
-                  key: opsgenie-key
+                  key: OPSGENIE_KEY
                   name: opsgenie-shift-reporter
             - name: slack-key
               valueFrom:
                 secretKeyRef:
-                  key: slack-key
+                  key: SLACK_KEY
                   name: opsgenie-shift-reporter
-            image: quay.io/giantswarm/opsgenie-shift-reporter:{{ .Chart.Version }}
+            image: "{{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Chart.Version }}"
             imagePullPolicy: Always
             name: opsgenie-shift-reporter
             resources:
