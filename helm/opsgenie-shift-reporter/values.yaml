@@ -1,0 +1,9 @@
+slack:
+  key: ""
+
+opsgenie:
+  key: ""
+
+global:
+  podSecurityStandards:
+    enforced: false

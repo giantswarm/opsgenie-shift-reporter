@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: opsgenie-shift-reporter
+  namespace: opsgenie-shift-reporter
+spec:
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - args:
+            - -opsgenie-key=$(opsgenie-key)
+            - -slack-key=$(slack-key)
+            env:
+            - name: opsgenie-key
+              valueFrom:
+                secretKeyRef:
+                  key: opsgenie-key
+                  name: opsgenie-shift-reporter
+            - name: slack-key
+              valueFrom:
+                secretKeyRef:
+                  key: slack-key
+                  name: opsgenie-shift-reporter
+            image: quay.io/giantswarm/opsgenie-shift-reporter:{{ .Chart.Version }}
+            imagePullPolicy: Always
+            name: opsgenie-shift-reporter
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              privileged: false
+              runAsGroup: 1000
+              runAsNonRoot: true
+              runAsUser: 1000
+              seccompProfile:
+                type: RuntimeDefault
+          restartPolicy: Never
+          schedulerName: default-scheduler
+          securityContext:
+            runAsNonRoot: true
+  schedule: 0 6 20 * *
+  successfulJobsHistoryLimit: 3
+  suspend: false
