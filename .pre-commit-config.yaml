@@ -8,7 +8,7 @@ repos:
         args: [ --format=json ]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
       - id: check-added-large-files
       # check for unresolved merge conflicts
@@ -28,4 +28,4 @@ repos:
         # timeout is needed for CI
         args: [ -E, gosec, -E, goconst, -E, govet, --timeout, 300s ]
       - id: go-imports
-        args: [ -local, github.com/giantswarm/operational-load-exporter ]
+        args: [ -local, github.com/giantswarm/opsgenie-shift-reporter ]
